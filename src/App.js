@@ -22,7 +22,8 @@ class App extends Component {
 		preserveImportant: true,
 		xmlMode: true,
 		displayInfoMouseOver: false,
-		displayInfoClick: false
+		displayInfoClick: false,
+		linksToAdd: ""
 	};
 
 	juiceIt = emailText => {
@@ -150,6 +151,21 @@ class App extends Component {
 		this.setState({
 			afterInlineText: doc
 		});
+
+		// let linksToAdd = this.state.linksToAdd.split("\n");
+		// let doc =
+		// 	linksToAdd.length > 0
+		// 		? this.state.beforeInlineText
+		// 		: "No Links Array Added.";
+
+		// for (var i = 0; i < linksToAdd.length; i++) {
+		// 	// make sure your hrefs match this, change if necessary
+		// 	doc = doc.replace(`href=""`, `href="${linksToAdd[i]}`);
+		// }
+
+		// this.setState({
+		// 	afterInlineText: doc
+		// });
 	};
 
 	render() {
@@ -203,48 +219,59 @@ class App extends Component {
 						placeholder="Paste HTML in need of inline styles"
 						name="beforeInlineText"
 						id="beforeInline"
-					></textarea>
+					/>
 				</div>
 
 				<button onClick={this.inlineThisEmail}>INLINE THIS HTML</button>
 				<button onClick={this.addLinks}>ADD LINKS</button>
 
-				<div className="checkboxes">
-					<label className="checkbox">
-						<input
-							type="checkbox"
-							name="removeStyleTags"
-							onChange={this.handleCheckboxChange}
-							checked={this.state.removeStyleTags}
-						/>
-						Remove <code>&lt;style&gt;</code> tag from head
-					</label>
+				<div className="middleContainer">
+					<div className="checkboxes">
+						<label className="checkbox">
+							<input
+								type="checkbox"
+								name="removeStyleTags"
+								onChange={this.handleCheckboxChange}
+								checked={this.state.removeStyleTags}
+							/>
+							Remove <code>&lt;style&gt;</code> tag from head
+						</label>
 
-					<label className="checkbox">
-						<input
-							type="checkbox"
-							name="preserveImportant"
-							onChange={this.handleCheckboxChange}
-							checked={this.state.preserveImportant}
-						/>
-						Preserve <code>!important</code> tags
-					</label>
+						<label className="checkbox">
+							<input
+								type="checkbox"
+								name="preserveImportant"
+								onChange={this.handleCheckboxChange}
+								checked={this.state.preserveImportant}
+							/>
+							Preserve <code>!important</code> tags
+						</label>
 
-					<label className="checkbox">
-						<input
-							type="checkbox"
-							name="xmlMode"
-							onChange={this.handleCheckboxChange}
-							checked={this.state.xmlMode}
+						<label className="checkbox">
+							<input
+								type="checkbox"
+								name="xmlMode"
+								onChange={this.handleCheckboxChange}
+								checked={this.state.xmlMode}
+							/>
+							<code>XML/XHTML</code> mode - necessary for mso/Outlook
+							<div>
+								<sup>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Also removes unnecessary closing{" "}
+									<code>&lt;/meta&gt;</code> tags
+								</sup>
+							</div>
+						</label>
+					</div>
+					{/* <div className="linkTextAreaContainer">
+						<textarea
+							placeholder="Links to be added"
+							onChange={this.handleTextAreaChange}
+							value={this.state.linksToAdd}
+							type="text"
+							name="linksToAdd"
 						/>
-						<code>XML/XHTML</code> mode - necessary for mso/Outlook
-						<div>
-							<sup>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Also removes unnecessary closing{" "}
-								<code>&lt;/meta&gt;</code> tags
-							</sup>
-						</div>
-					</label>
+					</div> */}
 				</div>
 
 				<button onClick={this.handleCopyText}>COPY INLINED HTML</button>
@@ -256,7 +283,7 @@ class App extends Component {
 						placeholder="Inlined HTML will be placed here"
 						name="afterInlineText"
 						id="afterInline"
-					></textarea>
+					/>
 				</div>
 			</main>
 		);
