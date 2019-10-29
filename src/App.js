@@ -54,7 +54,7 @@ class App extends Component {
 		}
 	};
 
-	handleSubmit = e => {
+	inlineThisEmail = () => {
 		this.setState(
 			{
 				afterInlineText: ""
@@ -131,11 +131,36 @@ class App extends Component {
 			: (infoButton.style.backgroundColor = "rgb(164, 201, 63)");
 	};
 
+	addLinks = () => {
+		// copy links from excel tagging worksheet
+		// make sure links are in proper order of email which might be slightly different than the numbered order of CTA1, CTA2, CTA3, etc.
+		// double the btn links if they have an outlook counterpart
+		const linksArray = [];
+
+		let doc =
+			linksArray.length > 0
+				? this.state.beforeInlineText
+				: "No Links Array Added.";
+
+		for (var i = 0; i < linksArray.length; i++) {
+			// make sure your hrefs match this, change if necessary
+			doc = doc.replace(`href=""`, `href="${linksArray[i]}`);
+		}
+
+		this.setState({
+			afterInlineText: doc
+		});
+	};
+
 	render() {
-		const displayPopover =
+		const displayPopoverVisibility =
 			this.state.displayInfoMouseOver || this.state.displayInfoClick
-				? "block"
-				: "none";
+				? "visible"
+				: "hidden";
+		const displayPopoverOpacity =
+			this.state.displayInfoMouseOver || this.state.displayInfoClick
+				? "1"
+				: "0";
 
 		return (
 			<main className="App">
@@ -162,7 +187,9 @@ class App extends Component {
 						id="info"
 						style={{
 							position: "relative",
-							display: `${displayPopover}`
+							transition: "visibility .25s, opacity .25s",
+							visibility: displayPopoverVisibility,
+							opacity: displayPopoverOpacity
 						}}
 					>
 						<Popover />
@@ -179,7 +206,8 @@ class App extends Component {
 					></textarea>
 				</div>
 
-				<button onClick={this.handleSubmit}>INLINE THIS HTML</button>
+				<button onClick={this.inlineThisEmail}>INLINE THIS HTML</button>
+				<button onClick={this.addLinks}>ADD LINKS</button>
 
 				<div className="checkboxes">
 					<label className="checkbox">
