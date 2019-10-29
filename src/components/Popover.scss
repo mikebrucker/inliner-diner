@@ -1,0 +1,24 @@
+.Popover {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 100;
+	border: 2px solid #333333;
+	border-radius: 1em;
+	background-color: #a4c93f;
+	color: #1b1b1b;
+	text-align: left;
+	text-align: justify;
+	padding: 0 2em 2em;
+	margin: 1em;
+	max-width: 756px;
+	width: 100%;
+
+	h2 {
+		text-align: center;
+	}
+
+	li {
+		margin: 8px auto;
+	}
+}
