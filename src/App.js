@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./App.scss";
 import juice from "juice";
-import Popover from "./components/Popover";
+import Header from "./components/Header";
+import Textarea from "./components/Textarea";
+import InlinerCheckboxes from "./components/InlinerCheckboxes";
 
 // juice is a module to inline CSS in HTML emails
 // returns a new text string of the inlined email
@@ -45,14 +47,21 @@ class App extends Component {
 	};
 
 	removeClosingMetaTags = emailText => {
-		if (emailText.includes("</img>")) {
+		let returnText = emailText;
+		if (returnText.includes("</img>")) {
 			return "Please fix Email\n\n</img> tag created by inliner. This happens because an <img> tag is not closed with />";
 		} else if (this.state.xmlMode) {
 			// xmlMode adds closing tags to all tags which is necessary but not for meta tag
+			// xmlMode does not affect <br /> tags so this fixes that also
+			returnText = returnText.replace(/<br>/g, "<br/>");
+			returnText = returnText.replace(/<br >/g, "<br/>");
+			returnText = returnText.replace(/< br>/g, "<br/>");
+			returnText = returnText.replace(/< br >/g, "<br/>");
 			// this removes that
 			// eslint-disable-next-line
-			return emailText.replace(/\<\/meta\>/g, "");
+			returnText = returnText.replace(/\<\/meta\>/g, "");
 		}
+		return returnText;
 	};
 
 	inlineThisEmail = () => {
@@ -123,13 +132,6 @@ class App extends Component {
 		this.setState({
 			displayInfoClick: !this.state.displayInfoClick
 		});
-		const infoButton = document.getElementsByClassName("info")[0];
-		infoButton.style.borderColor === "rgb(238, 238, 238)"
-			? (infoButton.style.borderColor = "rgb(164, 201, 63)")
-			: (infoButton.style.borderColor = "rgb(238, 238, 238)");
-		infoButton.style.backgroundColor === "rgb(164, 201, 63)"
-			? (infoButton.style.backgroundColor = "rgb(238, 238, 238)")
-			: (infoButton.style.backgroundColor = "rgb(164, 201, 63)");
 	};
 
 	addLinks = () => {
@@ -177,92 +179,41 @@ class App extends Component {
 			this.state.displayInfoMouseOver || this.state.displayInfoClick
 				? "1"
 				: "0";
+		const displayPopoverBgColor = this.state.displayInfoClick
+			? "#eeeeee"
+			: "#a4c93f";
+		const displayPopoverBordColor = this.state.displayInfoClick
+			? "#a4c93f"
+			: "#eeeeee";
 
 		return (
 			<main className="App">
-				<header>
-					<h1 className="App-title">Inliner Diner</h1>
-				</header>
-				<div>
-					<h4 className="App-subtitle">
-						Nothing's finer than being in your Inliner Diner
-					</h4>
-					<div
-						onMouseOver={this.showInfoMouseOver}
-						onMouseOut={this.hideInfoMouseOver}
-						onClick={this.infoClick}
-						className="info"
-						style={{
-							backgroundColor: "#a4c93f",
-							borderColor: "#eeeeee"
-						}}
-					>
-						!
-					</div>
-					<div
-						id="info"
-						style={{
-							position: "relative",
-							transition: "visibility .25s, opacity .25s",
-							visibility: displayPopoverVisibility,
-							opacity: displayPopoverOpacity
-						}}
-					>
-						<Popover />
-					</div>
-				</div>
-
-				<div className="textAreaContainer">
-					<textarea
-						onChange={this.handleTextAreaChange}
-						value={this.state.beforeInlineText}
-						placeholder="Paste HTML in need of inline styles"
-						name="beforeInlineText"
-						id="beforeInline"
-					/>
-				</div>
+				<Header
+					onMouseOver={this.showInfoMouseOver}
+					onMouseOut={this.hideInfoMouseOver}
+					onClick={this.infoClick}
+					visibility={displayPopoverVisibility}
+					opacity={displayPopoverOpacity}
+					bgColor={displayPopoverBgColor}
+					bordColor={displayPopoverBordColor}
+				/>
+				<Textarea
+					name="beforeInlineText"
+					placeholder="Paste HTML in need of inline styles"
+					value={this.state.beforeInlineText}
+					onChange={this.handleTextAreaChange}
+				/>
 
 				<button onClick={this.inlineThisEmail}>INLINE THIS HTML</button>
 				<button onClick={this.addLinks}>ADD LINKS</button>
 
 				<div className="middleContainer">
-					<div className="checkboxes">
-						<label className="checkbox">
-							<input
-								type="checkbox"
-								name="removeStyleTags"
-								onChange={this.handleCheckboxChange}
-								checked={this.state.removeStyleTags}
-							/>
-							Remove <code>&lt;style&gt;</code> tag from head
-						</label>
-
-						<label className="checkbox">
-							<input
-								type="checkbox"
-								name="preserveImportant"
-								onChange={this.handleCheckboxChange}
-								checked={this.state.preserveImportant}
-							/>
-							Preserve <code>!important</code> tags
-						</label>
-
-						<label className="checkbox">
-							<input
-								type="checkbox"
-								name="xmlMode"
-								onChange={this.handleCheckboxChange}
-								checked={this.state.xmlMode}
-							/>
-							<code>XML/XHTML</code> mode - necessary for mso/Outlook
-							<div>
-								<sup>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Also removes unnecessary closing{" "}
-									<code>&lt;/meta&gt;</code> tags
-								</sup>
-							</div>
-						</label>
-					</div>
+					<InlinerCheckboxes
+						onChange={this.handleCheckboxChange}
+						removeStyleTags={this.state.removeStyleTags}
+						preserveImportant={this.state.preserveImportant}
+						xmlMode={this.state.xmlMode}
+					/>
 					{/* <div className="linkTextAreaContainer">
 						<textarea
 							placeholder="Links to be added"
@@ -275,16 +226,12 @@ class App extends Component {
 				</div>
 
 				<button onClick={this.handleCopyText}>COPY INLINED HTML</button>
-
-				<div id="afterInlineContainer" className="textAreaContainer">
-					<textarea
-						onChange={this.handleTextAreaChange}
-						value={this.state.afterInlineText}
-						placeholder="Inlined HTML will be placed here"
-						name="afterInlineText"
-						id="afterInline"
-					/>
-				</div>
+				<Textarea
+					name="afterInlineText"
+					placeholder="Inlined HTML will be placed here"
+					value={this.state.afterInlineText}
+					onChange={this.handleTextAreaChange}
+				/>
 			</main>
 		);
 	}

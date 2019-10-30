@@ -1,0 +1,33 @@
+.Header {
+	.Header-title,
+	.Header-subtitle {
+		padding: 10px 30px;
+		color: #a4c93f;
+		font-weight: 300;
+		background-color: rgba(27, 27, 27, 0.9);
+		border-radius: 24px;
+		display: inline-block;
+		margin: 0.1em auto;
+	}
+
+	.Header-title {
+		font-size: 2.5em;
+	}
+	.Header-subtitle {
+		font-size: 1em;
+	}
+
+	.info {
+		display: inline-block;
+		background-color: #a4c93f;
+		color: #333333;
+		width: 36px;
+		height: 36px;
+		line-height: 32px;
+		font-size: 1.5em;
+		border: 2px solid #eeeeee;
+		border-radius: 10em;
+		vertical-align: top;
+		cursor: pointer;
+	}
+}

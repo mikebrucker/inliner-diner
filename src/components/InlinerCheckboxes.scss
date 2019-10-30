@@ -1,0 +1,14 @@
+.InlinerCheckboxes {
+	display: inline-block;
+	margin: 0 auto;
+	padding: 1em 2em 0.25em;
+	max-width: 440px;
+	text-align: left;
+	background-color: rgba(27, 27, 27, 0.9);
+	border-radius: 24px;
+
+	.checkbox {
+		margin: 0 auto 0.5em;
+		display: block;
+	}
+}

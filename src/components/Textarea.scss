@@ -1,0 +1,23 @@
+.Textarea {
+	margin: 0.5em auto;
+	padding: 1px;
+	width: 100%;
+	background-color: #ffffff;
+	border: 2px solid #666666;
+	border-radius: 0.5em;
+	overflow: hidden;
+
+	textarea {
+		margin: 0 auto;
+		padding: 1em;
+		width: 100%;
+		height: 30vh;
+		font-family: "Andale Mono", Consolas, "Lucida Console",
+			"Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+		font-size: 0.8em;
+		display: block;
+		border: none;
+		outline: none;
+		resize: vertical;
+	}
+}
