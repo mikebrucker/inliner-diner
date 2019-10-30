@@ -34,6 +34,10 @@ function Popover() {
 				Click the button <code>[COPY INLINED HTML]</code> to copy the bottom
 				textarea's text to the clipboard. Paste in your code editor.
 			</p>
+			<p>
+				Click the button <code>[NEW INSTANCE OF INLINER]</code> to open a new
+				instance of this inliner in a new tab/window.
+			</p>
 		</div>
 	);
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.scss";
 import juice from "juice";
+import createId from "create-id";
 import Header from "./components/Header";
 import Textarea from "./components/Textarea";
 import InlinerCheckboxes from "./components/InlinerCheckboxes";
@@ -48,19 +49,21 @@ class App extends Component {
 
 	removeClosingMetaTags = emailText => {
 		let returnText = emailText;
+
 		if (returnText.includes("</img>")) {
 			return "Please fix Email\n\n</img> tag created by inliner. This happens because an <img> tag is not closed with />";
 		} else if (this.state.xmlMode) {
-			// xmlMode adds closing tags to all tags which is necessary but not for meta tag
 			// xmlMode does not affect <br /> tags so this fixes that also
 			returnText = returnText.replace(/<br>/g, "<br/>");
 			returnText = returnText.replace(/<br >/g, "<br/>");
 			returnText = returnText.replace(/< br>/g, "<br/>");
 			returnText = returnText.replace(/< br >/g, "<br/>");
+			// xmlMode adds closing tags to all tags which is necessary but not for meta tag
 			// this removes that
 			// eslint-disable-next-line
 			returnText = returnText.replace(/\<\/meta\>/g, "");
 		}
+
 		return returnText;
 	};
 
@@ -197,6 +200,7 @@ class App extends Component {
 					bgColor={displayPopoverBgColor}
 					bordColor={displayPopoverBordColor}
 				/>
+
 				<Textarea
 					name="beforeInlineText"
 					placeholder="Paste HTML in need of inline styles"
@@ -206,6 +210,9 @@ class App extends Component {
 
 				<button onClick={this.inlineThisEmail}>INLINE THIS HTML</button>
 				<button onClick={this.addLinks}>ADD LINKS</button>
+				<a href={`/${createId()}`} target="_blank" rel="noopener noreferrer">
+					<button type="button">NEW INSTANCE OF INLINER</button>
+				</a>
 
 				<div className="middleContainer">
 					<InlinerCheckboxes
@@ -226,11 +233,13 @@ class App extends Component {
 				</div>
 
 				<button onClick={this.handleCopyText}>COPY INLINED HTML</button>
+
 				<Textarea
 					name="afterInlineText"
 					placeholder="Inlined HTML will be placed here"
 					value={this.state.afterInlineText}
 					onChange={this.handleTextAreaChange}
+					id="afterInline"
 				/>
 			</main>
 		);
