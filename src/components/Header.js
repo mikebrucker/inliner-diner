@@ -2,7 +2,7 @@ import React from "react";
 import Popover from "./Popover";
 import "./Header.scss";
 
-function Header({
+export default function Header({
 	onMouseOver,
 	onMouseOut,
 	onClick,
@@ -45,5 +45,3 @@ function Header({
 		</header>
 	);
 }
-
-export default Header;

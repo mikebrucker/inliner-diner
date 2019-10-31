@@ -1,7 +1,7 @@
 import React from "react";
 import "./Textarea.scss";
 
-function Textarea({ name, placeholder, value, onChange, id }) {
+export default function Textarea({ name, placeholder, value, onChange, id }) {
 	const textareaId = id ? id : "";
 
 	return (
@@ -16,5 +16,3 @@ function Textarea({ name, placeholder, value, onChange, id }) {
 		</div>
 	);
 }
-
-export default Textarea;

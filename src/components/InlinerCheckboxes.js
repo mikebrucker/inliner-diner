@@ -1,7 +1,7 @@
 import React from "react";
 import "./InlinerCheckboxes.scss";
 
-function InlinerCheckboxes({
+export default function InlinerCheckboxes({
 	onChange,
 	removeStyleTags,
 	preserveImportant,
@@ -47,5 +47,3 @@ function InlinerCheckboxes({
 		</div>
 	);
 }
-
-export default InlinerCheckboxes;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Popover.scss";
 
-function Popover() {
+export default function Popover() {
 	return (
 		<div className="Popover">
 			<h2>How to use CSS Inliner</h2>
@@ -38,8 +38,11 @@ function Popover() {
 				Click the button <code>[NEW INSTANCE OF INLINER]</code> to open a new
 				instance of this inliner in a new tab/window.
 			</p>
+			<p>
+				To add links/img+alt to empty href/src+alt attributes, edit the source
+				file App.js on the addLinksOrImg method and uncomment the button that
+				runs the method.
+			</p>
 		</div>
 	);
 }
-
-export default Popover;

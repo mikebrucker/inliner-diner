@@ -16,7 +16,7 @@ import InlinerCheckboxes from "./components/InlinerCheckboxes";
 //     option2: false
 // });
 
-class App extends Component {
+export default class App extends Component {
 	state = {
 		beforeInlineText: "",
 		fixedTextForInlining: "",
@@ -26,7 +26,7 @@ class App extends Component {
 		xmlMode: true,
 		displayInfoMouseOver: false,
 		displayInfoClick: false,
-		linksToAdd: ""
+		randomId: createId()
 	};
 
 	juiceIt = emailText => {
@@ -112,7 +112,7 @@ class App extends Component {
 		});
 	};
 
-	handleCopyText = e => {
+	handleCopyText = () => {
 		// highlights and copies text of the newly inlined email
 		const textAreaEl = document.getElementById("afterInline");
 		textAreaEl.select();
@@ -137,40 +137,50 @@ class App extends Component {
 		});
 	};
 
-	addLinks = () => {
+	randomId = () => {
+		this.setState({
+			randomId: createId()
+		});
+	};
+
+	addLinksOrImg = () => {
 		// copy links from excel tagging worksheet
 		// make sure links are in proper order of email which might be slightly different than the numbered order of CTA1, CTA2, CTA3, etc.
 		// double the btn links if they have an outlook counterpart
-		const linksArray = [];
+		const linkArray = [];
+		// Same concept applies for img src and alt
+		// const imgSrcArray = [];
+		// const imgAltArray = [];
 
 		let doc =
-			linksArray.length > 0
+			linkArray.length > 0
 				? this.state.beforeInlineText
-				: "No Links Array Added.";
+				: "No Link Array Added.";
+		// let doc =
+		// 	imgSrcArray.length > 0
+		// 		? this.state.beforeInlineText
+		// 		: "No Img Src Array Added.";
+		// let doc =
+		// 	imgAltArray.length > 0
+		// 		? this.state.beforeInlineText
+		// 		: "No Img Alt Array Added.";
 
-		for (var i = 0; i < linksArray.length; i++) {
-			// make sure your hrefs match this, change if necessary
-			doc = doc.replace(`href=""`, `href="${linksArray[i]}`);
+		for (let item of linkArray) {
+			// make sure your href matches this, change if necessary
+			doc = doc.replace(`href=""`, `href="${item}`);
 		}
+		// for (let item of imgSrcArray) {
+		// 	// make sure your src matches this, change if necessary
+		// 	doc = doc.replace(`src=""`, `src="${item}`);
+		// }
+		// for (let item of imgAltArray) {
+		// 	// make sure your alt matches this, change if necessary
+		// 	doc = doc.replace(`alt=""`, `alt="${item}`);
+		// }
 
 		this.setState({
 			afterInlineText: doc
 		});
-
-		// let linksToAdd = this.state.linksToAdd.split("\n");
-		// let doc =
-		// 	linksToAdd.length > 0
-		// 		? this.state.beforeInlineText
-		// 		: "No Links Array Added.";
-
-		// for (var i = 0; i < linksToAdd.length; i++) {
-		// 	// make sure your hrefs match this, change if necessary
-		// 	doc = doc.replace(`href=""`, `href="${linksToAdd[i]}`);
-		// }
-
-		// this.setState({
-		// 	afterInlineText: doc
-		// });
 	};
 
 	render() {
@@ -208,31 +218,30 @@ class App extends Component {
 					onChange={this.handleTextAreaChange}
 				/>
 
-				<button onClick={this.inlineThisEmail}>INLINE THIS HTML</button>
-				<button onClick={this.addLinks}>ADD LINKS</button>
-				<a href={`/${createId()}`} target="_blank" rel="noopener noreferrer">
-					<button type="button">NEW INSTANCE OF INLINER</button>
+				<button onClick={this.inlineThisEmail} type="button">
+					INLINE THIS HTML
+				</button>
+				{/* <button onClick={this.addLinksOrImg}>addLinksOrImg()</button> */}
+				<a
+					href={`/${this.state.randomId}`}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<button onClick={this.randomId} type="button">
+						NEW INSTANCE OF INLINER
+					</button>
 				</a>
 
-				<div className="middleContainer">
-					<InlinerCheckboxes
-						onChange={this.handleCheckboxChange}
-						removeStyleTags={this.state.removeStyleTags}
-						preserveImportant={this.state.preserveImportant}
-						xmlMode={this.state.xmlMode}
-					/>
-					{/* <div className="linkTextAreaContainer">
-						<textarea
-							placeholder="Links to be added"
-							onChange={this.handleTextAreaChange}
-							value={this.state.linksToAdd}
-							type="text"
-							name="linksToAdd"
-						/>
-					</div> */}
-				</div>
+				<InlinerCheckboxes
+					onChange={this.handleCheckboxChange}
+					removeStyleTags={this.state.removeStyleTags}
+					preserveImportant={this.state.preserveImportant}
+					xmlMode={this.state.xmlMode}
+				/>
 
-				<button onClick={this.handleCopyText}>COPY INLINED HTML</button>
+				<button onClick={this.handleCopyText} type="button">
+					COPY INLINED HTML
+				</button>
 
 				<Textarea
 					name="afterInlineText"
@@ -245,5 +254,3 @@ class App extends Component {
 		);
 	}
 }
-
-export default App;

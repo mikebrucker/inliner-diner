@@ -30,5 +30,31 @@
 		border-radius: 10em;
 		vertical-align: top;
 		cursor: pointer;
+		animation-name: shadow;
+		animation-duration: 5s;
+	}
+
+	@keyframes shadow {
+		0%,
+		16%,
+		32%,
+		48%,
+		64%,
+		80% {
+			box-shadow: 0 0 10px 5px aqua;
+		}
+
+		5%,
+		21%,
+		37%,
+		53%,
+		69%,
+		85% {
+			box-shadow: 0 0 10px 8px aqua;
+		}
+
+		100% {
+			box-shadow: none;
+		}
 	}
 }
