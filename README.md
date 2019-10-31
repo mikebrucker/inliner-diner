@@ -35,7 +35,7 @@ React suggests to use `serve` for to serve the build folder with a static server
 `serve -s build`
 
 If you do not have admin access to install `serve` globally you can serve the build folder to [http://localhost:8000](http://localhost:8000) on mac with python.  
-cd into to the `build` folder then run `python -m SimpleHTTPServer`. This does not allow for any route besides `/` due to the app being a SPA. Copy the provided `http-server.py` file into the build folder and cd into `build` then run `python http-server.py`.
+cd into to the `build` folder then run `python -m SimpleHTTPServer`. This does not allow for any route besides `/` due to the app being a SPA. Copy the provided `http-server.py` file into the build folder, cd into `build`, then run `python http-server.py`.
 
 <img src="https://i.imgur.com/xLeK8mH.jpg" alt="Seinfeld diner scene" width="400px" />
 
