@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./App.scss";
 import juice from "juice";
-import createId from "create-id";
 import Header from "./components/Header";
 import Textarea from "./components/Textarea";
 import InlinerCheckboxes from "./components/InlinerCheckboxes";
@@ -25,8 +24,7 @@ export default class App extends Component {
 		preserveImportant: true,
 		xmlMode: true,
 		displayInfoMouseOver: false,
-		displayInfoClick: false,
-		randomId: createId()
+		displayInfoClick: false
 	};
 
 	juiceIt = emailText => {
@@ -137,12 +135,6 @@ export default class App extends Component {
 		});
 	};
 
-	randomId = () => {
-		this.setState({
-			randomId: createId()
-		});
-	};
-
 	addLinksOrImg = () => {
 		// copy links from excel tagging worksheet
 		// make sure links are in proper order of email which might be slightly different than the numbered order of CTA1, CTA2, CTA3, etc.
@@ -223,13 +215,11 @@ export default class App extends Component {
 				</button>
 				{/* <button onClick={this.addLinksOrImg}>addLinksOrImg()</button> */}
 				<a
-					href={`/${this.state.randomId}`}
+					href={"http://koncordia.marketingassociates.com/inliner-diner/"}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<button onClick={this.randomId} type="button">
-						NEW INSTANCE OF INLINER
-					</button>
+					<button type="button">NEW INSTANCE OF INLINER</button>
 				</a>
 
 				<InlinerCheckboxes
